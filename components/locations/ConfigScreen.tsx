@@ -16,6 +16,7 @@ export interface AppInstallationParameters {
   growthbookServerUrl?: string;
   growthbookAPIKey: string;
   datasourceId: string;
+  projectId?: string;
 }
 
 const ConfigScreen = () => {
@@ -220,6 +221,17 @@ const ConfigScreen = () => {
             onChange={(e) =>
               setParameters({ ...parameters, datasourceId: e.target.value })
             }
+          />
+          <FormControl.Label htmlFor="project-id">
+              Project Id (The optional project id that experiments and features are created under)
+          </FormControl.Label>
+          <TextInput
+              id="project-id"
+              name="project-id"
+              value={parameters.projectId}
+              onChange={(e) =>
+                  setParameters({ ...parameters, projectId: e.target.value || undefined })
+              }
           />
         </FormControl>
       </Form>

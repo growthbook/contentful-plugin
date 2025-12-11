@@ -13,9 +13,10 @@ import { GrowthbookAPIContext } from "../../contexts/GrowthbookAPIContext";
 import { ExperimentAPIResponse } from "../../types/experiment";
 import Link from "next/link";
 import { ContentTypesContext } from "contexts/ContentTypesContext";
+import {AppInstallationParameters} from "@/components/locations/ConfigScreen";
 
 const Sidebar = () => {
-  const sdk = useSDK<SidebarAppSDK>();
+  const sdk = useSDK<SidebarAppSDK<AppInstallationParameters>>();
 
   const { growthbookAPI: growthbookExperimentApi } =
     useContext(GrowthbookAPIContext);
@@ -140,6 +141,7 @@ ${entries
 
         const results = await growthbookExperimentApi?.createExperiment({
           datasourceId: sdk.parameters.installation.datasourceId,
+          project: sdk.parameters.installation.projectId,
           assignmentQueryId: "user_id",
           trackingKey,
           name: trimmedFormExperimentName,
@@ -168,6 +170,7 @@ ${entries
             owner: sdk.user.email,
             valueType: "string",
             defaultValue: "0",
+            project: sdk.parameters.installation.projectId,
             environments: {
               production: {
                 enabled: true,
